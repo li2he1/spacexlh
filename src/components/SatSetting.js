@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import {InputNumber} from 'antd';
+import {InputNumber, Button} from 'antd';
 
 class SatSetting extends Component {
     constructor(){
         super();
         this.state = {
             observerLat: 0,
-            observerLong: 0
+            observerLong: 0,
+            onChangeAlt:0,
+            radius: 90,          
         }
     }
 
@@ -22,6 +24,20 @@ class SatSetting extends Component {
         this.setState({
             observerLat: value
         })
+    }
+    onChangeAlt = (value) => {
+        this.setState({
+            observerAlt: value
+        })
+    }
+    onChangeRadius = (value) => {
+        this.setState({
+            radius: value
+        })
+    }
+
+    showSatellite = () => {
+        this.props.onShow(this.state);
     }
 
     render() {
@@ -61,10 +77,34 @@ class SatSetting extends Component {
                                 max={8850}
                                 defaultValue={0}
                                 style={{margin: "0 2px"}}
-                                onChange={this.onChangeEle}
+                                onChange={this.onChangeAlt}
                             />
                         </div>
                     </div>
+                    <p className="setting-label">Restrictions</p>
+                        <div className="setting-list">
+                            <div className="list-item">
+                                <label>Search Radious </label>
+                                <InputNumber
+                                    min={0}
+                                    max={90}
+                                    defaultValue={0}
+                                    style={{margin: "0 2px"}}
+                                    onChange={this.onChangeRadius}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="show-nearby">
+                            <Button
+                                className="show-nearby-btn"
+                                size="large"
+                                onClick={this.showSatellite}
+                            >
+                                Find Nearby Satellites
+                            </Button>
+                        </div>
+
                 </div>
             </div>
         );
